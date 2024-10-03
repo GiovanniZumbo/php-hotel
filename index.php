@@ -56,24 +56,42 @@ $hotels = [
     <div class="container">
         <h1 class="text-center py-3">Hotels</h1>
 
-        <ul>
+        <!-- <ul>
             <?php foreach ($hotels as $hotel) { ?>
                 <li>Nome hotel: "<?= $hotel['name']; ?>"</li>
                 <li>Descrizione hotel: <?= $hotel['description']; ?></li>
-                <li>Parcheggio: <?php if ($hotel['parking']) {
-                                    echo 'Sì.';
-                                } else {
-                                    echo 'No.';
-                                } ?></li>
+                <li>Parcheggio: <?= ($hotel['parking'] ? "Sì." : "No."); ?> </li>
                 <li>Valutazione: <?= $hotel['vote']; ?>/5</li>
-                <li>Distanza dal centro: <?= $hotel['distance_to_center']; ?>km</li>
-
-
+                <li>Distanza dal centro: <?= $hotel['distance_to_center']; ?>km.</li>
 
                 <hr>
             <?php } ?>
 
-        </ul>
+        </ul> -->
+
+        <table class="table table-success table-hover text-center table-border border-success">
+            <thead>
+                <tr>
+                    <th scope="col">Hotel</th>
+                    <th scope="col">Descrizione</th>
+                    <th scope="col">Parcheggio</th>
+                    <th scope="col">Valutazione</th>
+                    <th scope="col">Distanza dal centro</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($hotels as $hotel) { ?>
+                    <tr>
+                        <th scope="row">"<?= $hotel['name']; ?>"</th>
+                        <td><?= $hotel['description']; ?></td>
+                        <td><?= ($hotel['parking'] ? "Sì." : "No."); ?></td>
+                        <td><?= $hotel['vote']; ?>/5</td>
+                        <td><?= $hotel['distance_to_center']; ?>km</td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+
     </div>
 </body>
 
