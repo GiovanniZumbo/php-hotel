@@ -55,6 +55,25 @@ $hotels = [
 <body>
     <div class="container">
         <h1 class="text-center py-3">Hotels</h1>
+
+        <ul>
+            <?php foreach ($hotels as $hotel) { ?>
+                <li>Nome hotel: "<?= $hotel['name']; ?>"</li>
+                <li>Descrizione hotel: <?= $hotel['description']; ?></li>
+                <li>Parcheggio: <?php if ($hotel['parking']) {
+                                    echo 'Sì.';
+                                } else {
+                                    echo 'No.';
+                                } ?></li>
+                <li>Valutazione: <?= $hotel['vote']; ?>/5</li>
+                <li>Distanza dal centro: <?= $hotel['distance_to_center']; ?>km</li>
+
+
+
+                <hr>
+            <?php } ?>
+
+        </ul>
     </div>
 </body>
 
