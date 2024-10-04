@@ -37,8 +37,38 @@ $hotels = [
         'vote' => 2,
         'distance_to_center' => 50
     ],
-
 ];
+
+$filteredHotels;
+
+if (isset($_GET["parking"]) && $_GET["parking"] === "on") {
+    $filteredHotels = [];
+
+    foreach ($hotels as $hotel) {
+        if ($hotel["parking"] === true) {
+            array_push($filteredHotels, $hotel);
+        }
+    }
+} else {
+    var_dump("Voglio tutti i voti");
+    $filteredHotels = $hotels;
+}
+
+// Voti
+
+if (isset($_GET["vote"]) && ($_GET["vote"] >= 1  && $_GET["vote"] <= 5)) {
+    $currentArray = [];
+
+    foreach ($filteredHotels as $hotel) {
+
+        if ($hotel["vote"] >= $_GET["vote"]) {
+            array_push($currentArray, $hotel);
+        }
+    }
+} else {
+    var_dump("Voglio tutti i voti");
+    $currentArray = $filteredHotels;
+}
 
 ?>
 
@@ -57,7 +87,7 @@ $hotels = [
         <h1 class="text-center py-3">Hotels</h1>
 
         <!-- <ul>
-            <?php foreach ($hotels as $hotel) { ?>
+            <?php foreach ($currentArray as $hotel) { ?>
                 <li>Nome hotel: "<?= $hotel['name']; ?>"</li>
                 <li>Descrizione hotel: <?= $hotel['description']; ?></li>
                 <li>Parcheggio: <?= ($hotel['parking'] ? "Sì." : "No."); ?> </li>
@@ -69,7 +99,18 @@ $hotels = [
 
         </ul> -->
 
-        <table class="table table-success table-hover text-center table-border border-success">
+        <div>
+            <span>Parcheggio: </span>
+            <form class="form-check form-check-inline ms-2" action="index.php" method="GET">
+                <input class="form-check-input" type="checkbox" name="parking" id="parking">
+                <label class=" form-check-label">Sì</label>
+                <input type="number" name="vote" id="vote" min="0" max="5">
+                <button class="btn btn-success ms-3" type="submit">Invia</button>
+                <button class="btn btn-light ms-3 border-success" type="reset">Pulisci dati</button>
+            </form>
+        </div>
+
+        <table class="table table-success table-hover text-center table-border border-success my-3">
             <thead>
                 <tr>
                     <th scope="col">Hotel</th>
@@ -80,11 +121,11 @@ $hotels = [
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($hotels as $hotel) { ?>
+                <?php foreach ($currentArray as $hotel) { ?>
                     <tr>
                         <th scope="row">"<?= $hotel['name']; ?>"</th>
                         <td><?= $hotel['description']; ?></td>
-                        <td><?= ($hotel['parking'] ? "Sì." : "No."); ?></td>
+                        <td><?= ($hotel['parking']) ? "Sì" : "No"; ?></td>
                         <td><?= $hotel['vote']; ?>/5</td>
                         <td><?= $hotel['distance_to_center']; ?>km</td>
                     </tr>
